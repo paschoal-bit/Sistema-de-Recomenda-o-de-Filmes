@@ -1,0 +1,29 @@
+# ===== Dados =====
+*.csv
+!data/sample.csv     
+
+# ===== Jupyter Notebook =====
+.ipynb_checkpoints/
+
+# ===== Python / Backend =====
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ===== Variáveis de ambiente e segredos =====
+.env
+*.key
+
+# ===== IDE =====
+.vscode/
+.idea/
+
+# ===== Sistema operacional =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+*.log
