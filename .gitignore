@@ -1,29 +1,31 @@
-# ===== Dados =====
-*.csv
-!data/sample.csv     
-
-# ===== Jupyter Notebook =====
-.ipynb_checkpoints/
-
-# ===== Python / Backend =====
-venv/
-env/
-.venv/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 
-# ===== Variáveis de ambiente e segredos =====
-.env
-*.key
+# Virtual environment
+.venv/
+venv/
+env/
 
-# ===== IDE =====
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# IDE
 .vscode/
 .idea/
 
-# ===== Sistema operacional =====
+# OS
 .DS_Store
 Thumbs.db
 
-# ===== Logs =====
-*.log
+# Data
+data/raw/
+data/processed/
+
+# Models
+models/*.pkl
+models/*.joblib
