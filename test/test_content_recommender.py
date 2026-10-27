@@ -2,6 +2,8 @@ import pandas as pd
 import pytest
 
 from src.content_recommender import (
+    extract_names,
+    load_movies,
     train_content_model,
     recommend_movies_by_content,
 )
@@ -80,3 +82,60 @@ def test_zero_recommendations_raises_value_error(
             trained_model,
             n_recommendations=0
         )
+
+###############################################################################################
+######################## TESTE DE PREPARAÇÃO DOS NOVOS DADOS ##################################
+###############################################################################################
+
+def test_extract_names():
+    value = "[{'id': 28, 'name': 'Action'}, {'id': 12, 'name': 'Adventure'}]"
+
+    result = extract_names(value)
+
+    assert result == "Action Adventure"
+
+
+def test_extract_names_with_empty_value():
+    assert extract_names(None) == ""
+    assert extract_names("") == ""
+
+
+
+def test_load_movies_(tmp_path):
+    # Cria um arquivo CSV temporário com dados de teste
+    csv_path = tmp_path / "movies.csv"
+
+    data = pd.DataFrame({
+        "title": ["Filme A", "Filme B"],
+        "overview": ["Uma aventura espacial", None],
+        "genres": [
+            "[{'id': 12, 'name': 'Adventure'}]",
+            "[{'id': 35, 'name': 'Comedy'}]",
+        ],
+        "keywords": [
+            "[{'id': 1, 'name': 'space'}]",
+            "[{'id': 2, 'name': 'friendship'}]",
+        ],
+    })
+
+    data.to_csv(csv_path, index=False)
+
+    movies = load_movies(csv_path)
+
+    assert len(movies) == 2
+    assert movies.loc[0, "genres"] == "Adventure"
+    assert movies.loc[1, "keywords"] == "friendship"
+    assert movies.loc[1, "overview"] == ""  #Verifica se o valor None foi substituído por uma string vazia
+
+
+'''
+O que você está aprendendo aqui?
+
+tmp_path: fixture do pytest que cria uma pasta temporária para o teste.
+
+to_csv(): permite gerar um CSV pequeno de exemplo, sem depender do dataset real.
+
+assert: verifica resultados concretos das funções.
+
+Testes de valores vazios: ajudam a evitar erros quando os dados reais possuem campos ausentes.
+'''
